@@ -121,7 +121,7 @@ make deploy ARGS="--network sepolia"
 3. Deploy (SVG NFT)
 
 ```
-make deploySvg ARGS="--network sepolia"
+make deployMoodNft ARGS="--network sepolia"
 ```
 
 ## Base64
