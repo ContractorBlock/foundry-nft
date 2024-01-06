@@ -161,7 +161,3 @@ forge fmt
 If you appreciated this, feel free to follow me or donate!
 
 ETH/Arbitrum/Optimism/BNB Smart chain/Avalanche/Polygon Address: 0xE25371455a8A1eEba4f16Bb17c4EBe91e0a64942
-
-```
-
-```
