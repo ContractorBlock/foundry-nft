@@ -1,58 +1,184 @@
-# 🙂 Mood NFT - a fully onchain NFT
+# Foundry NFT
 
-A dynamic (fully onchain) SVG NFT that updates in real-time when a function on the smart contract is called.
+This is my NFT project!
 
-You can see this smart contract deployed [on Sepolia](https://sepolia.etherscan.io/address/0x4381901C2Fd0B689cF02CbD6e7d88608D5FfD656).
+I created 2 different kind of NFTs.
 
-## ⚒️ Built with Foundry
+1. An IPFS Hosted NFT
+2. An SVG NFT (Hosted 100% on-chain)
 
-This project is built with [Foundry](https://github.com/foundry-rs/foundry) a portable and modular toolkit for Ethereum application development, which is required to build and deploy the project.
+<br/>
+<p align="center">
+<img src="./image/pug.png" width="225" alt="NFT Pug">
+<img src="./image/happy.svg" width="225" alt="NFT Happy">
+<img src="./image/sad.svg" width="225" alt="NFT Frown">
+</p>
+<br/>
 
-## 🏗️ Getting started
+- [Foundry NFT](#foundry-nft)
+- [Getting Started](#getting-started)
+  - [Requirements](#requirements)
+  - [Quickstart](#quickstart)
+- [Usage](#usage)
+  - [Start a local node](#start-a-local-node)
+  - [Deploy](#deploy)
+  - [Deploy - Other Network](#deploy---other-network)
+  - [Testing](#testing)
+    - [Test Coverage](#test-coverage)
+- [Deployment to a testnet or mainnet](#deployment-to-a-testnet-or-mainnet)
+  - [Scripts](#scripts)
+  - [Base64](#base64)
+  - [Estimate gas](#estimate-gas)
+- [Formatting](#formatting)
+- [Thank you!](#thank-you)
 
-Create a `.env` file with the following entries:
+# Getting Started
+
+## Requirements
+
+- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+  - You'll know you did it right if you can run `git --version` and you see a response like `git version x.x.x`
+- [foundry](https://getfoundry.sh/)
+  - You'll know you did it right if you can run `forge --version` and you see a response like `forge 0.2.0 (816e00b 2023-03-16T00:05:26.396218Z)`
+
+## Quickstart
 
 ```
-SEPOLIA_RPC_URL=<sepolia_rpc_url>
-PRIVATE_KEY=<private_key>
-ETHERSCAN_API_KEY=<etherscan_api_key>
+git clone https://github.com/Cyfrin/foundry-nft-f23
+cd foundry-nft-f23
+forge install
+forge build
 ```
 
-Install project dependencies
+# Usage
 
-```
-make install
-```
-
-Deploy the smart contract on Anvil
+## Start a local node
 
 ```
 make anvil
+```
+
+## Deploy
+
+This will default to your local node. You need to have it running in another terminal in order for it to deploy.
+
+```
 make deploy
 ```
 
-Deploy the smart contract on Sepolia
+## Deploy - Other Network
 
-```
-make deploy ARGS="--network sepolia"
-```
+[See below](#deployment-to-a-testnet-or-mainnet)
 
-## 🧪 Running tests
+## Testing
 
-To run against a local Anvil Ethereum node:
+We talk about 4 test tiers in the video.
+
+1. Unit
+2. Integration
+3. Forked
+4. Staging
+
+This repo we cover #1 and #3.
 
 ```
 forge test
 ```
 
-To run against a forked environment (e.g. a forked Sepolia testnet):
+or
 
 ```
-forge test --fork-url <sepolia_rpc_url>
+forge test --fork-url $SEPOLIA_RPC_URL
+```
+
+### Test Coverage
+
+```
+forge coverage
+```
+
+# Deployment to a testnet or mainnet
+
+1. Setup environment variables
+
+You'll want to set your `SEPOLIA_RPC_URL` and `PRIVATE_KEY` as environment variables. You can add them to a `.env` file, similar to what you see in `.env.example`.
+
+- `PRIVATE_KEY`: The private key of your account (like from [metamask](https://metamask.io/)). **NOTE:** FOR DEVELOPMENT, PLEASE USE A KEY THAT DOESN'T HAVE ANY REAL FUNDS ASSOCIATED WITH IT.
+  - You can [learn how to export it here](https://metamask.zendesk.com/hc/en-us/articles/360015289632-How-to-Export-an-Account-Private-Key).
+- `SEPOLIA_RPC_URL`: This is url of the goerli testnet node you're working with. You can get setup with one for free from [Alchemy](https://alchemy.com/?a=673c802981)
+
+Optionally, add your `ETHERSCAN_API_KEY` if you want to verify your contract on [Etherscan](https://etherscan.io/).
+
+1. Get testnet ETH
+
+Head over to [faucets.chain.link](https://faucets.chain.link/) and get some tesnet ETH. You should see the ETH show up in your metamask.
+
+2. Deploy (IPFS NFT)
+
+```
+make deploy ARGS="--network sepolia"
+```
+
+3. Deploy (SVG NFT)
+
+```
+make deploySvg ARGS="--network sepolia"
+```
+
+## Scripts
+
+After deploy to a testnet or local net, you can run the scripts.
+
+Using cast deployed locally example:
+
+```
+cast send <RAFFLE_CONTRACT_ADDRESS> "enterRaffle()" --value 0.1ether --private-key <PRIVATE_KEY> --rpc-url $SEPOLIA_RPC_URL
+```
+
+or, to create a ChainlinkVRF Subscription:
+
+```
+make createSubscription ARGS="--network sepolia"
+```
+
+## Base64
+
+To get the base64 of an image, you can use the following command:
+
+```
+echo "data:image/svg+xml;base64,$(base64 -i ./images/dynamicNft/happy.svg)"
+```
+
+Then, you can get the base64 encoding of the json object by placing the imageURI into `happy_image_uri.json` then running:
+
+```
+echo "data:application/json;base64,$(base64 -i ./images/dynamicNft/happy_image_uri.json)"
+```
+
+## Estimate gas
+
+You can estimate how much gas things cost by running:
+
+```
+forge snapshot
+```
+
+And you'll see and output file called `.gas-snapshot`
+
+# Formatting
+
+To run code formatting:
+
+```
+forge fmt
+```
 
 # Thank you!
 
 If you appreciated this, feel free to follow me or donate!
 
 ETH/Arbitrum/Optimism/BNB Smart chain/Avalanche/Polygon Address: 0xE25371455a8A1eEba4f16Bb17c4EBe91e0a64942
+
+```
+
 ```
