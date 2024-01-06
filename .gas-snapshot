@@ -1,0 +1,7 @@
+BasicNftTest:testCanMintAndHaveABalance() (gas: 175188)
+BasicNftTest:testNameIsCorrect() (gas: 9598)
+MoodNftTest:testCanMintAndHaveABalance() (gas: 79934)
+MoodNftTest:testFlipTokenToHappy() (gas: 416553)
+MoodNftTest:testInitializedCorrectly() (gas: 14615)
+MoodNftTest:testTokenURIDefaultIsCorrectlySet() (gas: 404793)
+MoodNftTest:testViewTokenURI() (gas: 78771)
